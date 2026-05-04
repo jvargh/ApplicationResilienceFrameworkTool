@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant EXT as External User
+    participant CLIENT as Client/Project Team
+    participant PM as Project Management
+    participant INGEST as Data Ingestion
+    participant ADLS as Landing Zone (ADLS)
+    participant DBX as Azure Databricks (Spark)
+    participant STAGE as Staging Zone
+    participant SQL as Metadata Store (Azure SQL)
+    participant COSMOS as Metadata Store (Cosmos DB)
+    participant OBIE as Data Processing (OBIE Engine)
+
+    %% 1 - Initiation
+    PM->>INGEST: 1. Project Data, Engagement Rollforward
+    
+    %% 2 - Ingestion
+    EXT-->>INGEST: 2. 5a, 5b. Data Upload
+    Note right of INGEST: Validate and stage incoming data
+
+    INGEST->>ADLS: 3. Raw data files
+    
+    %% 4 - Split Metadata flows from Data Ingestion
+    INGEST->>SQL: 4a. Client Relational Meta Data (Audit Logs)
+    INGEST->>COSMOS: 4b. Client JSON Config (Engagement Tags)
+
+    %% 5 & 6 - Processing
+    ADLS->>DBX: 5. Process raw data
+    Note right of DBX: Data transformation, quality checks,<br/>staging prep
+
+    DBX->>STAGE: 6. Cleansed data
+
+    %% 7 & 8 - OBIE Interaction
+    STAGE->>OBIE: 7. Client Financial Data
+    CLIENT->>OBIE: 8. Data staged via Databricks for OBIE processing
+
+    %% 11 - Split Metadata flows from Databricks
+    DBX->>SQL: 11a. Transformation Status & Metrics
+    DBX->>COSMOS: 11b. Enriched Meta Data Schema Updates
+
+    Note over DBX,SQL: Multi-store synchronization complete

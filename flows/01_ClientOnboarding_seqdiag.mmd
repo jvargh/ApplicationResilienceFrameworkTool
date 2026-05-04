@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant USER as User
+    participant SRC1 as Client System
+    participant SRC2 as HR Data Source
+    participant PM as Project Management
+    participant SQL as Metadata Store (Azure SQL)
+    participant COSMOS as Metadata Store (Cosmos DB)
+    participant INGEST as Data Ingestion
+    participant CONC as Conclude
+
+    USER->>PM: 1. Project Data
+    SRC1-->>PM: 2. Client, Entity
+    SRC2-->>PM: 3. Global Employees Data
+    
+    Note right of PM: Process project setup<br/>and engagement data
+
+    PM->>INGEST: 4. Project Data, Engagement Rollforward
+    PM->>CONC: 5. Engagement, Client, Entity
+    
+    %% Split flow from Project Management
+    PM->>SQL: 6. Primary Project Records
+    PM->>COSMOS: 7. Extended Engagement Config
+    
+    %% Flows from other nodes hitting stores individually
+    INGEST->>SQL: 8. Ingested Metadata (Status/Logs)
+    CONC->>SQL: 9. Project Wrap-up Data
+
+    Note over PM,INGEST: Project established, ready for data ingestion
