@@ -2,6 +2,8 @@
 
 A browser-based tool for building operational resilience through workflow-driven health modeling. It walks you through four phases - from Failure Mode Analysis to Azure deployment and continuous governance.
 
+📺 [Watch the video walkthrough](https://youtu.be/2UlnJGTGHY4)
+
 ## Contents
 
 ```
