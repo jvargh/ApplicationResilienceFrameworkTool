@@ -1,5 +1,9 @@
 # Application Resilience Testing Tool - User Guide
 
+## Featured Article
+
+📖 **[Architecture to resilience: A decision guide](https://techcommunity.microsoft.com/blog/azurearchitectureblog/architecture-to-resilience-a-decision-guide/4516552)** — Learn the decision framework and architectural principles behind building resilient applications.
+
 A browser-based tool for building operational resilience through workflow-driven health modeling. It walks you through four phases - from Failure Mode Analysis to Azure deployment and continuous governance.
 
 📺 [Watch the video walkthrough](https://youtu.be/2UlnJGTGHY4)
